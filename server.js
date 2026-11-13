@@ -106,7 +106,7 @@ function generateKey() {
   const a = Math.random().toString(36).substring(2, 6).toUpperCase();
   const b = Math.random().toString(36).substring(2, 10).toUpperCase();
   const c = Math.random().toString(36).substring(2, 4).toUpperCase();
-  return "JAYCE-" + a + "-" + b + "-" + c;
+  return "JAMARI-" + a + "-" + b + "-" + c;
 }
 
 function formatDate(ms) {
@@ -262,7 +262,7 @@ function createLuaTemplate(u, k, endpoint, displayName) {
     : (process.env.DOMAIN || "localhost:3000");
 
   return [
-    `-- ${displayName} : -- /jayce Loader`,
+    `-- ${displayName} : -- /jamari Loader`,
     `local USERNAME = "${u}"`,
     `local KEY = "${k}"`,
     `local HWID = game:GetService("RbxAnalyticsService"):GetClientId()`,
@@ -296,7 +296,7 @@ function createLuaTemplate(u, k, endpoint, displayName) {
 function createPanel() {
   const embed = new EmbedBuilder()
     .setColor(0xEAF4FF)
-    .setTitle("☁️ ୨୧ jayce script panel୨୧ ☁️")
+    .setTitle("☁️ ୨୧ jamari script panel୨୧ ☁️")
     .setDescription(
       "˚₊‧꒰ა Welcome to the heavenly control panel ໒꒱‧₊˚\n\n" +
       "Register an account\n" +
@@ -371,7 +371,7 @@ client.on("interactionCreate", async (interaction) => {
     const password = interaction.fields.getTextInputValue("password");
     const db = readDB();
 
-    if (!member) return interaction.reply({ content: "You are not in the Jayce server.", flags: MessageFlags.Ephemeral });
+    if (!member) return interaction.reply({ content: "You are not in the Jamari server.", flags: MessageFlags.Ephemeral });
 
     const actionRoleMap = {
       register: [MAIN_ACCESS_ROLE, MOBILE_MAIN_ROLE],
@@ -442,7 +442,7 @@ client.on("interactionCreate", async (interaction) => {
       return interaction.reply({ content: "No access.", flags: MessageFlags.Ephemeral });
     }
 
-    const loader = createLuaTemplate(username, inputKey, requestedScript, requestedScript === "main" ? "Jayce Main" : "Jayce Mobile");
+    const loader = createLuaTemplate(username, inputKey, requestedScript, requestedScript === "main" ? "Jamari Main" : "Jamari Mobile");
     return interaction.reply({ content: "```lua\n" + loader + "```", flags: MessageFlags.Ephemeral });
   }
 
@@ -450,7 +450,7 @@ client.on("interactionCreate", async (interaction) => {
 
   try {
     const db = readDB();
-    if (interaction.commandName !== "jayce") return;
+    if (interaction.commandName !== "jamari") return;
 
     const subcommand = interaction.options.getSubcommand();
 
@@ -521,7 +521,7 @@ client.on("interactionCreate", async (interaction) => {
       if (lookupUsername === "__meta" || !db[lookupUsername]) return interaction.editReply({ content: "Account not found." });
       const account = db[lookupUsername];
       return interaction.editReply({
-        content: "**User Info — `" + lookupUsername + "`**\n• **Username:** `" + lookupUsername + "`\n• **Password:** `" + account.password + "`\n• **Key:** `" + account.key + "`\n• **Scripts:** `" + (account.allowedScripts || []).join(", ") + "`\n• **Status:** `" + (account.status || "active") + "`",
+        content: "**User Info — `" + lookupUsername + "`**\n• **Username:** `" + lookupUsername + "`\n• **Password:** `" + account.password + "`\n• **Key:** `" + account.key + "`\n• **Scripts:** " + (account.allowedScripts || []).join(", ") + "\n• **Status:** `" + (account.status || "active") + "`",
         flags: MessageFlags.Ephemeral
       });
     }
@@ -604,7 +604,7 @@ client.on("guildMemberUpdate", async (oldMember, newMember) => {
 });
 
 function buildCommands() {
-  const builder = new SlashCommandBuilder().setName("jayce").setDescription("Loader commands");
+  const builder = new SlashCommandBuilder().setName("jamari").setDescription("Loader commands");
 
   try {
     if (typeof InteractionContextType !== "undefined") {
@@ -622,7 +622,7 @@ function buildCommands() {
   }
 
   builder
-    .addSubcommand((sub) => sub.setName("panel").setDescription("Open the Jayce scripts panel"))
+    .addSubcommand((sub) => sub.setName("panel").setDescription("Open the Jamari scripts panel"))
     .addSubcommand((sub) => sub.setName("setpanel").setDescription("Send the panel to a selected channel").addChannelOption((o) => o.setName("channel").setDescription("The channel to send the panel to").setRequired(true)))
     .addSubcommand((sub) => sub.setName("accountstatus").setDescription("Check your account status").addStringOption((o) => o.setName("username").setDescription("Your loader username").setRequired(true)).addStringOption((o) => o.setName("password").setDescription("Your loader password").setRequired(true)))
     .addSubcommand((sub) => sub.setName("changepassword").setDescription("Change your password").addStringOption((o) => o.setName("username").setDescription("Your loader username").setRequired(true)).addStringOption((o) => o.setName("old_password").setDescription("Current password").setRequired(true)).addStringOption((o) => o.setName("new_password").setDescription("New password").setRequired(true)))
@@ -668,14 +668,14 @@ client.on("messageCreate", async (message) => {
   try {
     if (message.author.bot || message.guild) return;
     const content = (message.content || "").trim();
-    if (!content.toLowerCase().startsWith("/jayce") && !content.toLowerCase().startsWith("!jayce")) return;
+    if (!content.toLowerCase().startsWith("/jamari") && !content.toLowerCase().startsWith("!jamari")) return;
 
     const db = readDB();
     const parts = content.split(/\s+/);
     const sub = (parts[1] || "").toLowerCase();
 
     if (!sub || sub === "help") {
-      return message.reply("**Jayce DM commands**\n`!jayce accountstatus <username> <password>`\n`!jayce changepassword <username> <oldpass> <newpass>`\n`!jayce key <username> <password>`");
+      return message.reply("**Jamari DM commands**\n`!jamari accountstatus <username> <password>`\n`!jamari changepassword <username> <oldpass> <newpass>`\n`!jamari key <username> <password>`");
     }
 
     if (sub === "accountstatus") {
@@ -696,7 +696,7 @@ client.on("messageCreate", async (message) => {
       const account = db[username];
       if (!account || account.password !== oldPass) return message.reply("Account not found or incorrect password");
       if (account.status === "disabled") return message.reply("This account is banned");
-      if (!newPass) return message.reply("Usage: `!jayce changepassword <username> <oldpass> <newpass>`");
+      if (!newPass) return message.reply("Usage: `!jamari changepassword <username> <oldpass> <newpass>`");
       account.password = newPass;
       writeDB(db);
       return message.reply("Password changed");
@@ -711,7 +711,7 @@ client.on("messageCreate", async (message) => {
       return message.reply("Your key is: `" + account.key + "`");
     }
 
-    return message.reply("Unknown subcommand. Type `!jayce help`");
+    return message.reply("Unknown subcommand. Type `!jamari help`");
   } catch (err) {
     console.error("[DM MESSAGE CMD ERROR]", err);
     try { await message.reply("Something went wrong."); } catch (_) {}
