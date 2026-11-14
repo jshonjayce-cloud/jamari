@@ -279,12 +279,12 @@ function createLuaTemplate(u, k, endpoint, displayName) {
     "  })",
     "end)",
     "",
-    "if not ok then error('[ /f2K8KAdBY5 ] Could not reach server: ' .. tostring(response)) end",
+    "if not ok then error('[ /ZhzpdNy4HG ] Could not reach server: ' .. tostring(response)) end",
     "",
     "local data = HttpService:JSONDecode(response.Body)",
     "if not data.success then",
     "  if data.reason == 'HWID mismatch' then",
-    "    game:GetService('Players').LocalPlayer:Kick('Wrong device detected. Visit discord.gg/f2K8KAdBY5 to reset your HWID.')",
+    "    game:GetService('Players').LocalPlayer:Kick('Wrong device detected. Visit discord.gg/ZhzpdNy4HG to reset your HWID.')",
     "  end",
     "  error('[ /f2K8KAdBY5 ] ' .. (data.reason or 'Unknown error'))",
     "end",
@@ -296,15 +296,15 @@ function createLuaTemplate(u, k, endpoint, displayName) {
 function createPanel() {
   const embed = new EmbedBuilder()
     .setColor(0xEAF4FF)
-    .setTitle("☁️ ୨୧ jamari script panel୨୧ ☁️")
+    .setTitle(" 🌹୨୧ jamari script panel୨୧ 🌹")
     .setDescription(
-      "˚₊‧꒰ა Welcome to the heavenly control panel ໒꒱‧₊˚\n\n" +
+      "˚₊‧꒰ა Welcome to the sweetest control panel ໒꒱‧₊˚\n\n" +
       "Register an account\n" +
       " Get your key\n" +
       "Main loader\n" +
       " Mobile loader\n" +
       "Reset HWID\n\n" +
-      "˚₊‧ May your day be full of sunshine and stardust ‧₊˚"
+      "˚₊‧ Smell like roses <3  ‧₊˚"
     )
     .addFields({
       name: " Available Actions",
